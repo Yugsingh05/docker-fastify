@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres:Yugsingh@2005@db:5432/react-docker
+      - PORT=3000
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  db:
+    image: postgres:15
+    ports:
+      - "5142:5432"
+    environment:
+      - POSTGRES_USER=neondb_owner
+      - POSTGRES_PASSWORD=npg_pFn9yLNX5Mrd
+      - POSTGRES_DB=ep-autumn-morning-a16wd1l7-pooler.ap-southeast-1.aws.neon.tech
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
