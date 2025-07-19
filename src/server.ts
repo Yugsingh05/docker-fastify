@@ -14,7 +14,7 @@ const server: FastifyInstance = Fastify({ logger: true });
 
 // Register plugins
 server.register(fastifyCors, {
-  origin: true, // Allow all origins with credentials
+  origin: '*', // Allow all origins with credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 });
