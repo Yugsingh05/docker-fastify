@@ -5,26 +5,33 @@ services:
     build: .
     ports:
       - "3005:3005"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
     env_file:
       - .env
     depends_on:
       - db
-    volumes:
-    
-      - .:/app
-      - /app/node_modules
-    command: npm run dev
+    networks:
+      - todo-app-network
 
   db:
     image: postgres:15
     ports:
-      - "5142:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=neondb_owner
       - POSTGRES_PASSWORD=npg_pFn9yLNX5Mrd
       - POSTGRES_DB=ep-autumn-morning-a16wd1l7-pooler.ap-southeast-1.aws.neon.tech
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo-app-network
 
 volumes:
   postgres_data:
+
+networks:
+  todo-app-network:
+    external: true
