@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { db } from '../db';
-import { tasks } from '../db/schema';
-import { eq } from 'drizzle-orm';
+import { db } from '../db/index.js';
+import { tasks } from '../db/schema.js';
+import { desc, eq } from 'drizzle-orm';
 
 interface TaskParams {
   id: number;
@@ -23,7 +23,7 @@ interface UpdateTaskBody {
 // Get all tasks
 export const getAllTasks = async (req: FastifyRequest, reply: FastifyReply) => {
   try {
-    const allTasks = await db.select().from(tasks);
+    const allTasks = await db.select().from(tasks).orderBy(desc(tasks.created_at));
     return reply.code(200).send(allTasks);
   } catch (error) {
     console.error('Error fetching tasks:', error);

@@ -4,13 +4,13 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
-    environment:
-      - DATABASE_URL=postgres://postgres:Yugsingh@2005@db:5432/react-docker
-      - PORT=3000
+      - "3005:3005"
+    env_file:
+      - .env
     depends_on:
       - db
     volumes:
+    
       - .:/app
       - /app/node_modules
     command: npm run dev
